@@ -1,0 +1,45 @@
+/* Media Queries */
+
+// Breakpoint above n
+@mixin bp($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (min-width: #{map-get($breakpoints, $breakpoint)}) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $breakpoint) {
+      @content;
+    }
+    @warn "Breakpoint not set in _variables.scss";
+  }
+}
+
+// Breakpoint just n
+@mixin bp-just($breakpoint, $breakpoint_upper: "") {
+  @if map-has-key($breakpoints, $breakpoint) and
+    map-get-next($breakpoints, $breakpoint)
+  {
+    @media screen and (min-width: #{map-get($breakpoints, $breakpoint)}) and (max-width: #{map-get-next($breakpoints, $breakpoint)}) {
+      @content;
+    }
+    @warn map-get($breakpoints, $breakpoint);
+    @warn map-get-next($breakpoints, $breakpoint);
+  } @else if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (min-width: #{map-get($breakpoints, $breakpoint)}) {
+      @content;
+    }
+  } @else if $breakpoint == mobile {
+    @media screen and (min-width:#{map-get($breakpoints, 'xs')}) and (max-width:#{map-get($breakpoints, 'md')}) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media screen and (min-width:#{map-get($breakpoints, 'md')}) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $breakpoint) and (max-width: $breakpoint_upper) {
+      @content;
+    }
+    @warn "Breakpoint not set in _variables.scss";
+  }
+}

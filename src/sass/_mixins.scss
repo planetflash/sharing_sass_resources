@@ -1,0 +1,48 @@
+@mixin transition($type: all, $transitionDuriation: 400ms, $transitionEasing: $easeOutQuart) {
+	transition: $type $transitionDuriation $transitionEasing;
+}
+
+@mixin backfaceFix { -webkit-backface-visibility: hidden; }
+
+@mixin clearfix {
+    zoom:1;
+    &:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+    &:after { clear: both;}
+}
+
+@mixin modulePaddingFix {
+	> *:last-child,
+	> *:last-child > *:last-child,
+	> *:last-child > *:last-child > *:last-child {
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+}
+
+@mixin absoluteFullSize {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+}
+
+@mixin absoluteCenter {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@function strip-units($number) {
+	@return $number / ($number * 0 + 1);
+}
+
+@function em($px, $base: $base) {
+  @return ($px / $base) * 1em;
+}
+
+@function rem($px, $base: $base) {
+  @return ($px / $base) * 1rem;
+}
